@@ -35,7 +35,17 @@ final class PhoneExtensionTest extends TestCase
     public function testSpacedIndicatoredCellPhoneNumber(): void
     {
         for ($i = 0; $i < 100; $i++) {
-            $this->assertMatchesRegularExpression('/^\+55[1-9]{2} 9\d{4} \d{4}$/', $this->faker->spacedIndicatoredCellPhoneNumber());
+            $this->assertMatchesRegularExpression('/^\+55 [1-9]{2} 9\d{4} \d{4}$/', $this->faker->spacedIndicatoredCellPhoneNumber());
+        }
+    }
+
+    public function testIndicatorIsSeparatedFromTheNumber(): void
+    {
+        for ($i = 0; $i < 100; $i++) {
+            $this->assertStringStartsWith('+55 ', $this->faker->spacedIndicatoredPhoneNumber());
+            $this->assertStringStartsWith('+55-', $this->faker->dashedIndicatoredPhoneNumber());
+            $this->assertStringStartsWith('+55.', $this->faker->dottedIndicatoredPhoneNumber());
+            $this->assertMatchesRegularExpression('/^\+55\d+$/', $this->faker->indicatoredPhoneNumber());
         }
     }
 }
